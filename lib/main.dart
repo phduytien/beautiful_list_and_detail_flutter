@@ -1,5 +1,9 @@
-import 'package:beautifullistdetail/utils/utils.dart';
 import 'package:flutter/material.dart';
+
+import 'utils/utils.dart';
+import 'model/list_model.dart';
+import 'model/lesson.dart';
+import 'detail.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,6 +30,13 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
+  List lessons;
+
+  @override
+  void initState() {
+    lessons = getLessons();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +52,7 @@ class _ListPageState extends State<ListPage> {
       ],
     );
 
-    final makeListTile = ListTile(
+    ListTile makeListTile(Lesson lesson) => ListTile(
         contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
         leading: Container(
           padding: EdgeInsets.only(right: 12.0),
@@ -51,34 +62,56 @@ class _ListPageState extends State<ListPage> {
           child: Icon(Icons.autorenew, color: Colors.white),
         ),
         title: Text(
-          "Introduction to Driving",
+          lesson.title,
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         subtitle: Row(
           children: <Widget>[
-            Icon(Icons.linear_scale, color: Colors.yellowAccent),
-            Text(" Intermediate", style: TextStyle(color: Colors.white))
+            Expanded(
+                flex: 1,
+                child: Container(
+                  // tag: 'hero',
+                  child: LinearProgressIndicator(
+                      backgroundColor: AppConstant.progressBarColor,
+                      value: lesson.indicatorValue,
+                      valueColor: AlwaysStoppedAnimation(Colors.green)),
+                )),
+            Expanded(
+              flex: 4,
+              child: Padding(
+                  padding: EdgeInsets.only(left: 10.0),
+                  child: Text(lesson.level,
+                      style: TextStyle(color: Colors.white))),
+            )
           ],
         ),
         trailing:
-            Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0));
+            Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DetailPage(lesson: lesson)
+              )
+          );
+        });
 
-    final makeCard = Card(
-      elevation: 8.0,
-      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-      child: Container(
-        decoration: BoxDecoration(color: AppConstant.cardBackgroundColor),
-        child: makeListTile,
-      ),
-    );
+    Card makeCard(Lesson lesson) => Card(
+          elevation: 8.0,
+          margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+          child: Container(
+            decoration: BoxDecoration(color: AppConstant.cardBackgroundColor),
+            child: makeListTile(lesson),
+          ),
+        );
 
     final listBody = Container(
       child: ListView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
-        itemCount: 10,
+        itemCount: lessons.length,
         itemBuilder: (BuildContext context, int index) {
-          return makeCard;
+          return makeCard(lessons[index]);
         },
       ),
     );
