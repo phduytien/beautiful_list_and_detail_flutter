@@ -10,10 +10,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Beautiful List & Detail',
-      theme: new ThemeData(primaryColor: AppConstant.backgroundColor),
-      home: new ListPage(title: 'Lessons')
-    );
+        title: 'Beautiful List & Detail',
+        theme: new ThemeData(primaryColor: AppConstant.backgroundColor),
+        home: new ListPage(title: 'Lessons'));
   }
 }
 
@@ -27,9 +26,9 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
+
   @override
   Widget build(BuildContext context) {
-
     final topAppBar = AppBar(
       elevation: 0.1,
       backgroundColor: AppConstant.backgroundColor,
@@ -47,54 +46,28 @@ class _ListPageState extends State<ListPage> {
         leading: Container(
           padding: EdgeInsets.only(right: 12.0),
           decoration: BoxDecoration(
-              border: Border(
-                  right: BorderSide(
-                      width: 1.0,
-                      color: Colors.white24
-                  )
-              )
-          ),
-          child: Icon(
-              Icons.autorenew,
-              color: Colors.white
-          ),
+              border:
+                  Border(right: BorderSide(width: 1.0, color: Colors.white24))),
+          child: Icon(Icons.autorenew, color: Colors.white),
         ),
         title: Text(
           "Introduction to Driving",
-          style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold
-          ),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         subtitle: Row(
           children: <Widget>[
-            Icon(
-                Icons.linear_scale,
-                color: Colors.yellowAccent
-            ),
-            Text(
-                " Intermediate",
-                style: TextStyle(color: Colors.white)
-            )
+            Icon(Icons.linear_scale, color: Colors.yellowAccent),
+            Text(" Intermediate", style: TextStyle(color: Colors.white))
           ],
         ),
-        trailing: Icon(
-            Icons.keyboard_arrow_right,
-            color: Colors.white,
-            size: 30.0
-        )
-    );
+        trailing:
+            Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0));
 
     final makeCard = Card(
       elevation: 8.0,
-      margin: EdgeInsets.symmetric(
-          horizontal: 10.0,
-          vertical: 6.0
-      ),
+      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
       child: Container(
-        decoration: BoxDecoration(
-            color: AppConstant.cardBackgroundColor
-        ),
+        decoration: BoxDecoration(color: AppConstant.cardBackgroundColor),
         child: makeListTile,
       ),
     );
