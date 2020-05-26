@@ -1,3 +1,4 @@
+import 'package:beautifullistdetail/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,7 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Beautiful List & Detail',
-      theme: new ThemeData(primaryColor: Color.fromRGBO(58, 66, 86, 1.0)),
+      theme: new ThemeData(primaryColor: AppConstant.backgroundColor),
       home: new ListPage(title: 'Lessons')
     );
   }
@@ -31,7 +32,7 @@ class _ListPageState extends State<ListPage> {
 
     final topAppBar = AppBar(
       elevation: 0.1,
-      backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
+      backgroundColor: AppConstant.backgroundColor,
       title: Text(widget.title),
       actions: <Widget>[
         IconButton(
@@ -41,9 +42,107 @@ class _ListPageState extends State<ListPage> {
       ],
     );
 
+    final makeListTile = ListTile(
+        contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+        leading: Container(
+          padding: EdgeInsets.only(right: 12.0),
+          decoration: BoxDecoration(
+              border: Border(
+                  right: BorderSide(
+                      width: 1.0,
+                      color: Colors.white24
+                  )
+              )
+          ),
+          child: Icon(
+              Icons.autorenew,
+              color: Colors.white
+          ),
+        ),
+        title: Text(
+          "Introduction to Driving",
+          style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold
+          ),
+        ),
+        subtitle: Row(
+          children: <Widget>[
+            Icon(
+                Icons.linear_scale,
+                color: Colors.yellowAccent
+            ),
+            Text(
+                " Intermediate",
+                style: TextStyle(color: Colors.white)
+            )
+          ],
+        ),
+        trailing: Icon(
+            Icons.keyboard_arrow_right,
+            color: Colors.white,
+            size: 30.0
+        )
+    );
+
+    final makeCard = Card(
+      elevation: 8.0,
+      margin: EdgeInsets.symmetric(
+          horizontal: 10.0,
+          vertical: 6.0
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+            color: AppConstant.cardBackgroundColor
+        ),
+        child: makeListTile,
+      ),
+    );
+
+    final listBody = Container(
+      child: ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: 10,
+        itemBuilder: (BuildContext context, int index) {
+          return makeCard;
+        },
+      ),
+    );
+
+    final tabbarBottom = Container(
+      height: AppConstant.bottomTabbarHeight,
+      child: BottomAppBar(
+        color: AppConstant.backgroundColor,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            IconButton(
+              icon: Icon(Icons.home, color: Colors.white),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(Icons.blur_on, color: Colors.white),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(Icons.hotel, color: Colors.white),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(Icons.account_box, color: Colors.white),
+              onPressed: () {},
+            )
+          ],
+        ),
+      ),
+    );
+
     return Scaffold(
-      backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
+      backgroundColor: AppConstant.backgroundColor,
       appBar: topAppBar,
+      body: listBody,
+      bottomNavigationBar: tabbarBottom,
     );
   }
 }

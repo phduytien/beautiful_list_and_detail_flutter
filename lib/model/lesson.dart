@@ -5,6 +5,11 @@ class Lesson {
   int price;
   String content;
 
-  Lesson(
-      {this.title, this.level, this.indicatorValue, this.price, this.content});
+  Lesson({
+    this.title,
+    this.level,
+    this.indicatorValue,
+    this.price,
+    this.content
+  });
 }
