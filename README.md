@@ -1,4 +1,4 @@
-# beautifullistdetail
+# Beautiful List UI & Detail Page
 
 A beautiful list UI and detail page Flutter app
 
