@@ -11,21 +11,24 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Top
+
     final levelIndicator = Container(
       child: Container(
         child: LinearProgressIndicator(
             backgroundColor: AppConstant.progressBarColor,
             value: lesson.indicatorValue,
-            valueColor: AlwaysStoppedAnimation(Colors.green)),
+            valueColor: AlwaysStoppedAnimation(Colors.green)
+        ),
       ),
     );
 
     final coursePrice = Container(
-      padding: const EdgeInsets.all(7.0),
-      decoration: new BoxDecoration(
-          border: new Border.all(color: Colors.white),
+      padding: EdgeInsets.all(7.0),
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.white),
           borderRadius: BorderRadius.circular(5.0)),
-      child: new Text(
+      child: Text(
         "\$" + lesson.price.toString(),
         style: TextStyle(color: Colors.white),
       ),
@@ -34,7 +37,7 @@ class DetailPage extends StatelessWidget {
     final topContentText = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        SizedBox(height: 120.0),
+        SizedBox(height: 60.0),
         Icon(
           Icons.directions_car,
           color: Colors.white,
@@ -44,24 +47,26 @@ class DetailPage extends StatelessWidget {
           width: 90.0,
           child: new Divider(color: Colors.green),
         ),
-        SizedBox(height: 10.0),
+        SizedBox(height: 8.0),
         Text(
           lesson.title,
-          style: TextStyle(color: Colors.white, fontSize: 45.0),
+          style: TextStyle(color: Colors.white, fontSize: 36.0),
         ),
-        SizedBox(height: 30.0),
+        SizedBox(height: 24.0),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Expanded(flex: 1, child: levelIndicator),
             Expanded(
-                flex: 6,
+                flex: 4,
                 child: Padding(
                     padding: EdgeInsets.only(left: 10.0),
                     child: Text(
                       lesson.level,
                       style: TextStyle(color: Colors.white),
-                    ))),
+                    )
+                )
+            ),
             Expanded(flex: 1, child: coursePrice)
           ],
         ),
@@ -71,19 +76,17 @@ class DetailPage extends StatelessWidget {
     final topContent = Stack(
       children: <Widget>[
         Container(
-            padding: EdgeInsets.only(left: 10.0),
-            height: MediaQuery.of(context).size.height * 0.5,
-            decoration: new BoxDecoration(
-              image: new DecorationImage(
-                image: new AssetImage("drive-steering-wheel.jpg"),
-                fit: BoxFit.cover,
-              ),
-            )),
-        Container(
-          height: MediaQuery.of(context).size.height * 0.5,
           padding: EdgeInsets.all(40.0),
           width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(color: Color.fromRGBO(58, 66, 86, .9)),
+          decoration: BoxDecoration(
+            color: AppConstant.cardBackgroundColor,
+            image: DecorationImage(
+              colorFilter: ColorFilter.mode(
+                  AppConstant.cardBackgroundColor, BlendMode.srcATop),
+              image: AssetImage("drive-steering-wheel.jpg"),
+              fit: BoxFit.cover,
+            ),
+          ),
           child: Center(
             child: topContentText,
           ),
@@ -101,33 +104,44 @@ class DetailPage extends StatelessWidget {
       ],
     );
 
+    // Bottom
+
     final bottomContentText = Text(
       lesson.content,
       style: TextStyle(fontSize: 18.0),
     );
+
     final readButton = Container(
         padding: EdgeInsets.symmetric(vertical: 16.0),
         width: MediaQuery.of(context).size.width,
         child: RaisedButton(
           onPressed: () => {},
-          color: Color.fromRGBO(58, 66, 86, 1.0),
-          child:
-              Text("TAKE THIS LESSON", style: TextStyle(color: Colors.white)),
-        ));
-    final bottomContent = Container(
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.all(40.0),
-      child: Center(
-        child: Column(
-          children: <Widget>[bottomContentText, readButton],
-        ),
-      ),
+          color: AppConstant.backgroundColor,
+          child: Text(
+              "TAKE THIS LESSON",
+              style: TextStyle(color: Colors.white)
+          ),
+        )
+    );
+
+    final bottomContent = Expanded(
+        child: SingleChildScrollView(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.all(40.0),
+            child: Center(
+              child: Column(
+                children: <Widget>[bottomContentText, readButton],
+              ),
+            ),
+          ),
+        )
     );
 
     return Scaffold(
-      body: Column(
-        children: <Widget>[topContent, bottomContent],
-      ),
+        body: Column(
+            children: <Widget>[topContent, bottomContent]
+        )
     );
   }
 }
